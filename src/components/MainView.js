@@ -3,6 +3,7 @@ import useInViewOnce from "../hooks/useInViewOnce.js";
 import images from "../utils/importImages.js";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../utils/projects.js";
+import danielCV from "../images/Daniel-John-Almirante.pdf";
 const MainView = () => {
     const [profileRef, profileView] = useInViewOnce();
     const [aboutRef, aboutView] = useInViewOnce();
@@ -95,16 +96,9 @@ const MainView = () => {
                         <h1 className="title name">Daniel John Almirante</h1>
                         <p className="section__text__p2">Fullstack Developer</p>
                         <div className="btn-container">
-                            <button
-                                className="btn btn-color-2"
-                                onclick="window.open('./assets/resume-example.pdf')">
-                                Download cv
-                            </button>
-                            <button
-                                className="btn btn-color-1"
-                                onclick="location.href='./#contact'">
-                                Contact Info
-                            </button>
+                            <a href={danielCV} download="DanielJohnAlmirante-cv-file.pdf">
+                                <button className="btn btn-color-2">Download CV</button>
+                            </a>
                         </div>
 
                         <div id="socials-container">
@@ -112,13 +106,20 @@ const MainView = () => {
                                 className="icon"
                                 src={images["linkedin.png"]}
                                 alt="My linkedin profile"
-                                onclick="location.href='https://www.linkedin.com/in/daniel-john-almirante-b42782301/'"
+                                onClick={() =>
+                                    window.open(
+                                        "https://www.linkedin.com/in/daniel-john-almirante-b42782301/",
+                                        "_blank"
+                                    )
+                                }
                             />
                             <img
                                 className="icon"
                                 src={images["github.png"]}
                                 alt="My Github profile"
-                                onclick="location.href='https://github.com/danielpinoy'"
+                                onClick={() =>
+                                    window.open("https://github.com/danielpinoy", "_blank")
+                                }
                             />
                         </div>
                     </div>

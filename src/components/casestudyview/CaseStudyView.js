@@ -41,6 +41,9 @@ const CaseStudyView = () => {
                     </div>
                 ))}
             </div>
+            <button className="back-btn" onClick={() => window.history.back()}>
+                Back
+            </button>
         </div>
     );
 };

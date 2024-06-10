@@ -1,5 +1,6 @@
 const importAll = (r, subfolder = "") => {
     let images = {};
+    // eslint-disable-next-line array-callback-return
     r.keys().map((item) => {
         const key = subfolder ? `${subfolder}/${item.replace("./", "")}` : item.replace("./", "");
         images[key] = r(item);

@@ -27,7 +27,7 @@ const MainView = () => {
                 <div id="projectContainer"></div>
 
                 <nav id="desktop-nav">
-                    <h1 className="logo">Daniel John</h1>
+                    <h1 className="logo">Daniel John Almirante</h1>
                     <div>
                         <ul className="nav-links">
                             <li>

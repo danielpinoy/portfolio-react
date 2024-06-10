@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import ProjectViewer from "./components/projectsview/ProjectsView";
+import MainView from "./components/MainView";
+import CaseStudyView from "./components/casestudyview/CaseStudyView";
 
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Router>
+            <div>
+                <Routes>
+                    <Route exact path="/" element={<MainView />} />
+                    <Route path="/project/:id" element={<ProjectViewer />} />
+                    <Route path="/case-study/MyFlix" element={<CaseStudyView />} />
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;

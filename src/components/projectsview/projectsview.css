@@ -1,0 +1,223 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+}
+
+.project-viewer {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.project-title {
+    font-size: 2rem;
+    text-align: center;
+}
+.line-1 {
+    margin: 0 auto;
+    border-right: 2px solid black;
+    overflow: hidden;
+    transform: translateY(-50%);
+}
+
+.project-description {
+    margin: 20px 20px;
+}
+
+.project-features,
+.project-installation,
+.project-usage,
+.project-technologies,
+.project-features-detailed {
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+}
+
+ul,
+ol {
+    margin-left: 20px;
+}
+
+li {
+    margin-bottom: 5px;
+    font-size: 1.2rem;
+}
+
+pre {
+    background-color: #f4f4f4;
+    padding: 10px;
+}
+
+code {
+    font-family: monospace;
+}
+.project-container {
+    min-height: 100vh;
+}
+.project-features-detailed {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+    align-items: start;
+}
+
+.feature {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feature h4 {
+    font-size: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.feature-description {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.75s ease 0s;
+}
+
+.feature.expanded .feature-description {
+    max-height: 20vh;
+}
+.project-technologies ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-technologies li {
+    background-color: #f4f4f4;
+    padding: 8px 12px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.project-installation ol,
+.project-usage pre {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.project-installation ol li,
+.project-usage pre {
+    margin-bottom: 10px;
+}
+
+/* Testing */
+
+.project-testing {
+    margin: 40px;
+}
+
+.testing-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+}
+
+.testing-section {
+    flex-basis: 48%;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.testing-section h4 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.testing-section p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Back Button */
+
+.back-btn {
+    font-size: 18px;
+    color: #454545;
+    font-family: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    background: none;
+    text-transform: uppercase;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: color;
+}
+
+.back-btn:focus,
+.back-btn:hover {
+    color: #000000;
+}
+
+.back-btn:focus:after,
+.back-btn:hover:after {
+    width: 100%;
+    left: 0%;
+}
+
+.back -btn:after {
+    content: "";
+    pointer-events: none;
+    bottom: -2px;
+    left: 50%;
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background-color: #000000;
+    transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-duration: 400ms;
+    transition-property: width, left;
+}
+
+@media screen and (max-width: 768px) {
+    .project-viewer {
+        padding: 10px;
+    }
+
+    .project-features-detailed {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation Github Button*/
+.anim-typewriter {
+    animation: typewriter 0.8s steps(44) 1.5s 1 normal both,
+        blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter {
+    from {
+        width: 0;
+    }
+    to {
+        width: 4em;
+    }
+}
+@keyframes blinkTextCursor {
+    from {
+        border-right-color: rgba(0, 0, 0, 0.75);
+    }
+    to {
+        border-right-color: transparent;
+    }
+}

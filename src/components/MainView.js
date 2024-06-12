@@ -22,11 +22,12 @@ const MainView = () => {
     const handleViewProject = (project) => {
         navigate(`/project/${project.id}`, { state: { project } });
     };
-    // const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // const toggleMenu = () => {
-    //     setIsMenuOpen(!isMenuOpen);
-    // };
+    // eslint-disable-next-line no-unused-vars
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
 
     return (
         <div>

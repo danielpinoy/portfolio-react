@@ -176,7 +176,7 @@ code {
     left: 0%;
 }
 
-.back -btn:after {
+.back-btn:after {
     content: "";
     pointer-events: none;
     bottom: -2px;

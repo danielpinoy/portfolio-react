@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import useInViewOnce from "../hooks/useInViewOnce.js";
 import images from "../utils/importImages.js";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../utils/projects.js";
 import danielCV from "../images/Daniel-John-Almirante.pdf";
+
 const MainView = () => {
     const [profileRef, profileView] = useInViewOnce();
     const [aboutRef, aboutView] = useInViewOnce();
@@ -20,6 +21,11 @@ const MainView = () => {
 
     const handleViewProject = (project) => {
         navigate(`/project/${project.id}`, { state: { project } });
+    };
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
     };
 
     return (
@@ -44,39 +50,6 @@ const MainView = () => {
                                 <a href="#contact">Contact</a>
                             </li>
                         </ul>
-                    </div>
-                </nav>
-
-                <nav id="hamburger-nav">
-                    <div className="logo">Daniel John</div>
-                    <div className="hamburger-menu">
-                        <div className="hamburger-icon" onclick="toggleMenu()">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <div className="menu-links">
-                            <li>
-                                <a href="#about" onclick="toggleMenu()">
-                                    About
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#experience" onclick="toggleMenu()">
-                                    Experience
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#projects" onclick="toggleMenu()">
-                                    Projects
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#contact" onclick="toggleMenu()">
-                                    Contact
-                                </a>
-                            </li>
-                        </div>
                     </div>
                 </nav>
 
@@ -182,12 +155,6 @@ const MainView = () => {
                             </div>
                         </div>
                     </div>
-                    <img
-                        src={images["arrow.png"]}
-                        alt="Arrow icon"
-                        className="icon arrow"
-                        onclick="location.href='./#experience'"
-                    />
                 </section>
 
                 <section
@@ -320,12 +287,6 @@ const MainView = () => {
                             </div>
                         </div>
                     </div>
-                    <img
-                        src={images["arrow.png"]}
-                        alt="Arrow icon"
-                        className="icon arrow"
-                        onclick="location.href='./#projects'"
-                    />
                 </section>
                 <section
                     id="projects"
@@ -503,12 +464,6 @@ const MainView = () => {
                             </div>
                         </div>
                     </div>
-                    <img
-                        src={images["arrow.png"]}
-                        alt="Arrow icon"
-                        className="icon arrow"
-                        onclick="location.href='./#contact'"
-                    />
                 </section>
                 <section
                     id="contact"

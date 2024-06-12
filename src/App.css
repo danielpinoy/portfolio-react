@@ -483,8 +483,15 @@ footer p {
         height: 83vh;
         margin-bottom: 0;
     }
+    .profile-img {
+        margin-left: 0px;
+    }
     article {
         font-size: 1rem;
+    }
+    .btn {
+        font-weight: 300;
+        width: 9rem;
     }
     footer nav {
         height: fit-content;
@@ -511,7 +518,9 @@ footer p {
     .nav-links {
         flex-direction: column;
         gap: 0.5rem;
-        text-align: center;
+    }
+    .nav-links li a {
+        font-size: 1.2rem;
     }
     .section__pic-container {
         width: auto;

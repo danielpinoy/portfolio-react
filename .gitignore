@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+# Ignore the casestudy-archive directory
+/src/images/casestudy-archive
+
+
 # testing
 /coverage
 

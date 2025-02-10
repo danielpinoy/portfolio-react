@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useInViewOnce from "../hooks/useInViewOnce.js";
 import images from "../utils/importImages.js";
 import { useNavigate } from "react-router-dom";
 import { projects } from "../utils/projects.js";
 import danielCV from "../images/Daniel-John-Almirante.pdf";
-
+import { caseStudyImages } from "../utils/projects.js";
 const MainView = () => {
   const [profileRef, profileView] = useInViewOnce();
   const [aboutRef, aboutView] = useInViewOnce();
@@ -28,6 +28,23 @@ const MainView = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  // Preload images when the component mounts
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  useEffect(() => {
+    let loadedCount = 0;
+    caseStudyImages.forEach((image) => {
+      const img = new Image();
+      img.src = image;
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount === caseStudyImages.length) {
+          setImagesLoaded(true);
+        }
+      };
+    });
+  }, []);
 
   return (
     <div>
@@ -411,13 +428,22 @@ const MainView = () => {
                   RetroFlix
                 </h2>
                 <div className="btn-container">
-                  <button className="btn btn-color-2 project-btn">
+                  <button
+                    className="btn btn-color-2 project-btn"
+                    onClick={() => handleViewProject(projects[1])}
+                  >
                     View Project
                   </button>
                   <button
                     className="btn btn-color-2 project-btn"
                     onClick={() => {
-                      navigate("/case-study/MyFlix");
+                      if (imagesLoaded) {
+                        navigate("/case-study/MyFlix");
+                      } else {
+                        alert(
+                          "Images are still loading. Please wait a moment."
+                        );
+                      }
                     }}
                   >
                     CaseStudy

@@ -33,6 +33,7 @@ const MainView = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
+    console.log(caseStudyImages[1]);
     let loadedCount = 0;
     caseStudyImages.forEach((image) => {
       const img = new Image();

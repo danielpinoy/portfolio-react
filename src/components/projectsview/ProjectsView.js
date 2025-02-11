@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import "./projectsview.css";
-import "./projectsview.min.css";
+import "./projectsview.css";
 import { useLocation } from "react-router-dom";
 
 const ProjectViewer = () => {

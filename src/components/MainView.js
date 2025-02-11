@@ -34,6 +34,7 @@ const MainView = () => {
 
   useEffect(() => {
     console.log(caseStudyImages[1]);
+    console.log(projects);
     let loadedCount = 0;
     caseStudyImages.forEach((image) => {
       const img = new Image();
@@ -431,7 +432,7 @@ const MainView = () => {
                 <div className="btn-container">
                   <button
                     className="btn btn-color-2 project-btn"
-                    onClick={() => handleViewProject(projects[1])}
+                    onClick={() => handleViewProject(projects[3])}
                   >
                     View Project
                   </button>

@@ -190,6 +190,65 @@ const projects = [
       bdd: "The Meet App followed a Behavior-Driven Development (BDD) approach, where requirements were defined in a structured format using Gherkin syntax. These requirements were then translated into test scenarios using the Jest-Cucumber library, ensuring that the application met the specified behaviors and requirements.",
     },
   },
+  {
+    id: "RetroLens",
+    title: "RetroLens - Historical Movies Application",
+    description: [
+      "RetroLens is a web application that showcases historical movies, providing users with a curated collection of films based on historical events and periods.",
+      "Built with React and Redux Toolkit for the frontend and Express/MongoDB for the backend, the application offers a user-friendly interface with authentication and personalization features.",
+      "The development process emphasized responsive design, secure authentication, efficient state management, and robust error handling.",
+    ],
+    installation: [
+      "Install Node.js and npm if you haven't already.",
+      "Clone this repository.",
+      "Navigate to the project directory and run `npm install`.",
+      "Start the development server using `npm start`.",
+    ],
+    technologies: [
+      "React",
+      "Redux Toolkit",
+      "React Bootstrap",
+      "React Router",
+      "JWT Authentication",
+    ],
+    detailedFeatures: [
+      {
+        title: "User Authentication",
+        description:
+          "Implemented secure authentication using JWT tokens, allowing users to register, log in, update profiles, change passwords, and delete accounts.",
+      },
+      {
+        title: "Movie Management",
+        description:
+          "Users can browse a curated collection of historical movies, view detailed movie information, add/remove favorites, filter by genre, and search for specific movies or directors.",
+      },
+      {
+        title: "State Management",
+        description:
+          "Utilized Redux Toolkit for centralized state management, enabling efficient handling of user sessions, async operations, and error states.",
+      },
+      {
+        title: "Security Implementation",
+        description:
+          "Ensured security through JWT authentication, password hashing with bcrypt, rate limiting, CORS protection, input validation, and secure password update mechanisms.",
+      },
+      {
+        title: "Error Handling",
+        description:
+          "Implemented comprehensive error handling including network error detection, form validation, API rate limiting, and user-friendly toast notifications.",
+      },
+      {
+        title: "User Interface & Experience",
+        description:
+          "Designed a responsive UI using React Bootstrap, featuring intuitive navigation, toast notifications, loading states, and clear error messages.",
+      },
+    ],
+    contact: {
+      name: "Daniel John",
+      email: "almirante.danieljohn@gmail.com",
+    },
+    demo: "https://kaleidoscopic-tiramisu-9e52da.netlify.app/login",
+  },
 ];
 
 const caseStudyImages = [

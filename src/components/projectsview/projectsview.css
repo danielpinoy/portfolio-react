@@ -182,16 +182,18 @@ li {
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 1000;
-  margin-top: 0;
 }
+
 .back-btn:active {
   transform: translateY(0);
 }
+
 .back-btn:hover {
   background-color: rgb(193, 193, 193); /* Solid on hover */
   transform: translateY(-2px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 /* Responsive adjustments */
 @media screen and (max-width: 1024px) {
   .top-sections-grid {
@@ -222,5 +224,29 @@ li {
 
   .project-title {
     font-size: 2rem;
+  }
+  .back-btn {
+    width: auto; /* Change from 100% to auto */
+    left: 20px; /* Keep it at the left */
+    bottom: 10px; /* Adjusted for mobile */
+    padding: 0.75rem 1.5rem; /* Ensure padding is consistent */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .project-title {
+    font-size: 1.75rem; /* Smaller title for very small screens */
+  }
+
+  .project-description {
+    font-size: 1rem; /* Adjust description font size */
+  }
+
+  .feature h4 {
+    font-size: 1.125rem; /* Adjust feature title size */
+  }
+
+  .feature-description {
+    font-size: 0.875rem; /* Adjust feature description size */
   }
 }

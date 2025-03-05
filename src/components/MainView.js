@@ -5,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { projects } from "../utils/projects.js";
 import danielCV from "../images/Daniel-John-Almirante.pdf";
 import { caseStudyImages } from "../utils/projects.js";
+
 const MainView = () => {
   const [profileRef, profileView] = useInViewOnce();
   const [aboutRef, aboutView] = useInViewOnce();
   const [experienceRef, experienceView] = useInViewOnce();
   const [projectRef, projectView] = useInViewOnce();
   const [contactRef, contactView] = useInViewOnce();
-  // projects
 
+  // Projects refs
   const [project01Ref, project01View] = useInViewOnce();
   const [project02Ref, project02View] = useInViewOnce();
   const [project03Ref, project03View] = useInViewOnce();
@@ -22,19 +23,13 @@ const MainView = () => {
   const handleViewProject = (project) => {
     navigate(`/project/${project.id}`, { state: { project } });
   };
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Preload images when the component mounts
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    console.log(caseStudyImages[1]);
-    console.log(projects);
     let loadedCount = 0;
     caseStudyImages.forEach((image) => {
       const img = new Image();
@@ -73,6 +68,7 @@ const MainView = () => {
           </div>
         </nav>
 
+        {/* Profile Section */}
         <section
           id="profile"
           ref={profileRef}
@@ -118,6 +114,8 @@ const MainView = () => {
             </div>
           </div>
         </section>
+
+        {/* About Section */}
         <section
           id="about"
           ref={aboutRef}
@@ -126,13 +124,13 @@ const MainView = () => {
           <p className="section__text__p1">Get To Know More</p>
           <h1 className="title">About Me</h1>
           <div className="section-container">
-            <div className="section__pic-container1">
+            {/* <div className="section__pic-container1">
               <img
                 src={images["danieljohnportfolio.jpg"]}
                 alt="Daniel's face"
                 className="about-pic"
               />
-            </div>
+            </div> */}
             <div className="about-details-container">
               <div className="about-containers">
                 <div className="details-container">
@@ -182,6 +180,7 @@ const MainView = () => {
           </div>
         </section>
 
+        {/* Experience Section */}
         <section
           id="experience"
           ref={experienceRef}
@@ -263,7 +262,7 @@ const MainView = () => {
                 </div>
               </div>
               <div className="details-container">
-                <h2 className="experience-sub-title">Frontend Development</h2>
+                <h2 className="experience-sub-title">Backend Development</h2>
                 <div className="article-container">
                   <article>
                     <img
@@ -314,6 +313,8 @@ const MainView = () => {
             </div>
           </div>
         </section>
+
+        {/* Projects Section */}
         <section
           id="projects"
           ref={projectRef}
@@ -345,7 +346,7 @@ const MainView = () => {
                     View Project
                   </button>
                   <button
-                    class="github-btn"
+                    className="github-btn"
                     onClick={() =>
                       window.open(
                         "https://github.com/danielpinoy/ChatRoom",
@@ -391,7 +392,7 @@ const MainView = () => {
                     View Project
                   </button>
                   <button
-                    class="github-btn"
+                    className="github-btn"
                     onClick={() =>
                       window.open(
                         "https://github.com/danielpinoy/meet",
@@ -451,7 +452,7 @@ const MainView = () => {
                     CaseStudy
                   </button>
                   <button
-                    class="github-btn"
+                    className="github-btn"
                     onClick={() =>
                       window.open(
                         "https://github.com/danielpinoy/historic-movies-client",
@@ -494,9 +495,8 @@ const MainView = () => {
                   >
                     View Project
                   </button>
-
                   <button
-                    class="github-btn"
+                    className="github-btn"
                     onClick={() =>
                       window.open(
                         "https://github.com/danielpinoy/myFlixClient",
@@ -521,6 +521,8 @@ const MainView = () => {
             </div>
           </div>
         </section>
+
+        {/* Contact Section */}
         <section
           id="contact"
           ref={contactRef}
@@ -579,6 +581,8 @@ const MainView = () => {
             </div>
           </div>
         </section>
+
+        {/* Footer Section */}
         <footer>
           <nav>
             <div className="nav-links-container">
@@ -600,7 +604,6 @@ const MainView = () => {
           </nav>
           <p>Copyright &#169; 2024 Daniel John</p>
         </footer>
-        <script src="script.js"></script>
       </body>
     </div>
   );

@@ -24,8 +24,6 @@ const MainView = () => {
     navigate(`/project/${project.id}`, { state: { project } });
   };
 
-  // const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   // Preload images when the component mounts
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
@@ -45,11 +43,14 @@ const MainView = () => {
 
   return (
     <div>
-      <body>
+      <body className="modern-portfolio">
         <div id="projectContainer"></div>
 
         <nav id="desktop-nav">
-          <h1 className="logo">Daniel John Almirante</h1>
+          <div className="nav-brand">
+            <h1 className="logo">Daniel John Almirante</h1>
+            <span className="tagline">Full Stack Developer</span>
+          </div>
           <div>
             <ul className="nav-links">
               <li>
@@ -75,6 +76,7 @@ const MainView = () => {
           className={`hidden ${profileView ? "show" : ""}`}
         >
           <div className="section__pic-container">
+            <div className="image-backdrop"></div>
             <img
               className="profile-img"
               src={images["profile-pic.jpg"]}
@@ -85,32 +87,46 @@ const MainView = () => {
             <p className="section__text__p1">Hello I'm</p>
             <h1 className="title name">Daniel John Almirante</h1>
             <p className="section__text__p2">Fullstack Developer</p>
+            <div className="skill-tags">
+              <span className="skill-tag">React</span>
+              <span className="skill-tag">Node.js</span>
+              <span className="skill-tag">Express</span>
+              <span className="skill-tag">MongoDB</span>
+            </div>
             <div className="btn-container">
               <a href={danielCV} download="DanielJohnAlmirante-cv-file.pdf">
                 <button className="btn btn-color-2">Download CV</button>
               </a>
+              <a href="#contact">
+                <button className="btn btn-color-1">Contact Me</button>
+              </a>
             </div>
 
             <div id="socials-container">
-              <img
-                className="icon"
-                src={images["linkedin.png"]}
-                alt="My linkedin profile"
-                onClick={() =>
-                  window.open(
-                    "https://www.linkedin.com/in/daniel-john-almirante-b42782301/",
-                    "_blank"
-                  )
-                }
-              />
-              <img
-                className="icon"
-                src={images["github.png"]}
-                alt="My Github profile"
-                onClick={() =>
-                  window.open("https://github.com/danielpinoy", "_blank")
-                }
-              />
+              <a
+                className="social-link"
+                href="https://www.linkedin.com/in/daniel-john-almirante-b42782301/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="icon"
+                  src={images["linkedin.png"]}
+                  alt="My linkedin profile"
+                />
+              </a>
+              <a
+                className="social-link"
+                href="https://github.com/danielpinoy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  className="icon"
+                  src={images["github.png"]}
+                  alt="My Github profile"
+                />
+              </a>
             </div>
           </div>
         </section>
@@ -124,21 +140,16 @@ const MainView = () => {
           <p className="section__text__p1">Get To Know More</p>
           <h1 className="title">About Me</h1>
           <div className="section-container">
-            {/* <div className="section__pic-container1">
-              <img
-                src={images["danieljohnportfolio.jpg"]}
-                alt="Daniel's face"
-                className="about-pic"
-              />
-            </div> */}
             <div className="about-details-container">
               <div className="about-containers">
                 <div className="details-container">
-                  <img
-                    src={images["experience.png"]}
-                    alt="Experience icon"
-                    className="icon"
-                  />
+                  <div className="detail-icon-wrapper">
+                    <img
+                      src={images["experience.png"]}
+                      alt="Experience icon"
+                      className="icon"
+                    />
+                  </div>
                   <h3>Experience</h3>
                   <p>
                     2+ years <br />
@@ -146,11 +157,13 @@ const MainView = () => {
                   </p>
                 </div>
                 <div className="details-container">
-                  <img
-                    src={images["education.png"]}
-                    alt="Education icon"
-                    className="icon"
-                  />
+                  <div className="detail-icon-wrapper">
+                    <img
+                      src={images["education.png"]}
+                      alt="Education icon"
+                      className="icon"
+                    />
+                  </div>
                   <h3>Education</h3>
                   <p>
                     Undergraduate
@@ -166,8 +179,8 @@ const MainView = () => {
                   technologies such as HTML, CSS, JavaScript, and various
                   frameworks. With a background in frontend development and
                   cloud computing.
-                  <br />
-                  <br />
+                </p>
+                <p>
                   In my free time, I enjoy playing video games and hitting the
                   gym. Gaming allows me to unwind and immerse myself in exciting
                   virtual worlds, while regular workouts help me maintain a
@@ -190,10 +203,10 @@ const MainView = () => {
           <h1 className="title">Experience</h1>
           <div className="experience-details-container">
             <div className="about-containers">
-              <div className="details-container">
+              <div className="details-container skills-card">
                 <h2 className="experience-sub-title">Frontend Development</h2>
                 <div className="article-container">
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -201,10 +214,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>HTML</h3>
-                      <p>Experienced</p>
+                      <div className="skill-level">
+                        <div className="skill-bar experienced"></div>
+                        <p>Experienced</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -212,10 +228,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>CSS</h3>
-                      <p>Experienced</p>
+                      <div className="skill-level">
+                        <div className="skill-bar experienced"></div>
+                        <p>Experienced</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -223,10 +242,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>SASS</h3>
-                      <p>Intermediate</p>
+                      <div className="skill-level">
+                        <div className="skill-bar intermediate"></div>
+                        <p>Intermediate</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -234,10 +256,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>JavaScript</h3>
-                      <p>Basic</p>
+                      <div className="skill-level">
+                        <div className="skill-bar basic"></div>
+                        <p>Basic</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -245,10 +270,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>TypeScript</h3>
-                      <p>Basic</p>
+                      <div className="skill-level">
+                        <div className="skill-bar basic"></div>
+                        <p>Basic</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -256,15 +284,18 @@ const MainView = () => {
                     />
                     <div>
                       <h3>Material UI</h3>
-                      <p>Intermediate</p>
+                      <div className="skill-level">
+                        <div className="skill-bar intermediate"></div>
+                        <p>Intermediate</p>
+                      </div>
                     </div>
                   </article>
                 </div>
               </div>
-              <div className="details-container">
+              <div className="details-container skills-card">
                 <h2 className="experience-sub-title">Backend Development</h2>
                 <div className="article-container">
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -272,10 +303,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>PostgreSQL</h3>
-                      <p>Basic</p>
+                      <div className="skill-level">
+                        <div className="skill-bar basic"></div>
+                        <p>Basic</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -283,10 +317,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>Node JS</h3>
-                      <p>Intermediate</p>
+                      <div className="skill-level">
+                        <div className="skill-bar intermediate"></div>
+                        <p>Intermediate</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -294,10 +331,13 @@ const MainView = () => {
                     />
                     <div>
                       <h3>Express JS</h3>
-                      <p>Intermediate</p>
+                      <div className="skill-level">
+                        <div className="skill-bar intermediate"></div>
+                        <p>Intermediate</p>
+                      </div>
                     </div>
                   </article>
-                  <article>
+                  <article className="skill-item">
                     <img
                       src={images["checkmark.png"]}
                       alt="Experience icon"
@@ -305,7 +345,10 @@ const MainView = () => {
                     />
                     <div>
                       <h3>Git</h3>
-                      <p>Intermediate</p>
+                      <div className="skill-level">
+                        <div className="skill-bar intermediate"></div>
+                        <p>Intermediate</p>
+                      </div>
                     </div>
                   </article>
                 </div>
@@ -326,18 +369,29 @@ const MainView = () => {
             <div className="projects-about-container">
               <div
                 ref={project01Ref}
-                className={`details-container color-container hidden ${
+                className={`details-container project-card hidden ${
                   project01View ? "show" : ""
                 }`}
               >
                 <div className="article-container">
-                  <img
-                    src={images["chatbox2.jpg"]}
-                    alt="Project 1"
-                    className="project-img"
-                  />
+                  <div className="project-img-container">
+                    <img
+                      src={images["chatbox2.jpg"]}
+                      alt="Project 1"
+                      className="project-img"
+                    />
+                    <div className="project-overlay">
+                      <div className="project-tech">
+                        React Native • Firebase • Expo
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <h2 className="experience-sub-title project-title">Chat Box</h2>
+                <p className="project-description">
+                  A mobile chat application built with React Native that allows
+                  real-time messaging with image and location sharing.
+                </p>
                 <div className="btn-container">
                   <button
                     className="btn btn-color-2 project-btn"
@@ -357,7 +411,7 @@ const MainView = () => {
                     <svg
                       width="40"
                       height="40"
-                      fill="#0092E4"
+                      fill="#3a86ff"
                       xmlns="http://www.w3.org/2000/svg"
                       data-name="Layer 1"
                       viewBox="0 0 24 24"
@@ -370,20 +424,31 @@ const MainView = () => {
               </div>
               <div
                 ref={project01Ref}
-                className={`details-container color-container hidden ${
+                className={`details-container project-card hidden ${
                   project01View ? "show" : ""
                 }`}
               >
                 <div className="article-container">
-                  <img
-                    src={images["MeetUp.png"]}
-                    alt="Project 2"
-                    className="project-img"
-                  />
+                  <div className="project-img-container">
+                    <img
+                      src={images["MeetUp.png"]}
+                      alt="Project 2"
+                      className="project-img"
+                    />
+                    <div className="project-overlay">
+                      <div className="project-tech">
+                        React • TDD • Google Calendar API
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <h2 className="experience-sub-title project-title">
                   MeetUp App
                 </h2>
+                <p className="project-description">
+                  A serverless PWA built with React using TDD that displays
+                  upcoming events from Google Calendar API.
+                </p>
                 <div className="btn-container">
                   <button
                     className="btn btn-color-2 project-btn"
@@ -403,7 +468,7 @@ const MainView = () => {
                     <svg
                       width="40"
                       height="40"
-                      fill="#0092E4"
+                      fill="#3a86ff"
                       xmlns="http://www.w3.org/2000/svg"
                       data-name="Layer 1"
                       viewBox="0 0 24 24"
@@ -416,21 +481,32 @@ const MainView = () => {
               </div>
               <div
                 ref={project02Ref}
-                className={`details-container color-container hidden ${
+                className={`details-container project-card hidden ${
                   project02View ? "show" : ""
                 }`}
               >
                 <div className="article-container">
-                  <img
-                    src={images["chrome_Ek35uDuwS5.png"]}
-                    alt="Project 3"
-                    className="project-img"
-                  />
+                  <div className="project-img-container">
+                    <img
+                      src={images["chrome_Ek35uDuwS5.png"]}
+                      alt="Project 3"
+                      className="project-img"
+                    />
+                    <div className="project-overlay">
+                      <div className="project-tech">
+                        React • Redux • Express • MongoDB
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <h2 className="experience-sub-title project-title">
                   RetroFlix
                 </h2>
-                <div className="btn-container">
+                <p className="project-description">
+                  A web application showcasing historical movies with React
+                  frontend and Express/MongoDB backend.
+                </p>
+                <div className="btn-container three-button">
                   <button
                     className="btn btn-color-2 project-btn"
                     onClick={() => handleViewProject(projects[3])}
@@ -438,7 +514,7 @@ const MainView = () => {
                     View Project
                   </button>
                   <button
-                    className="btn btn-color-2 project-btn"
+                    className="btn btn-color-1 project-btn"
                     onClick={() => {
                       if (imagesLoaded) {
                         navigate("/case-study/MyFlix");
@@ -449,7 +525,7 @@ const MainView = () => {
                       }
                     }}
                   >
-                    CaseStudy
+                    Case Study
                   </button>
                   <button
                     className="github-btn"
@@ -463,7 +539,7 @@ const MainView = () => {
                     <svg
                       width="40"
                       height="40"
-                      fill="#0092E4"
+                      fill="#3a86ff"
                       xmlns="http://www.w3.org/2000/svg"
                       data-name="Layer 1"
                       viewBox="0 0 24 24"
@@ -476,18 +552,29 @@ const MainView = () => {
               </div>
               <div
                 ref={project03Ref}
-                className={`details-container color-container hidden ${
+                className={`details-container project-card hidden ${
                   project03View ? "show" : ""
                 }`}
               >
                 <div className="article-container">
-                  <img
-                    src={images["myflixclient1.png"]}
-                    alt="Project 4"
-                    className="project-img"
-                  />
+                  <div className="project-img-container">
+                    <img
+                      src={images["myflixclient1.png"]}
+                      alt="Project 4"
+                      className="project-img"
+                    />
+                    <div className="project-overlay">
+                      <div className="project-tech">
+                        Angular • Material UI • RESTful APIs
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <h2 className="experience-sub-title project-title">MyFlix</h2>
+                <p className="project-description">
+                  Movie application with Angular frontend, featuring user
+                  profile management and favorite movies.
+                </p>
                 <div className="btn-container">
                   <button
                     className="btn btn-color-2 project-btn"
@@ -507,7 +594,7 @@ const MainView = () => {
                     <svg
                       width="40"
                       height="40"
-                      fill="#0092E4"
+                      fill="#3a86ff"
                       xmlns="http://www.w3.org/2000/svg"
                       data-name="Layer 1"
                       viewBox="0 0 24 24"
@@ -532,27 +619,31 @@ const MainView = () => {
           <h1 className="title">Contact Me</h1>
           <div className="contact-info-upper-container">
             <div className="contact-info-container">
-              <img
-                src={images["email.png"]}
-                alt="Email icon"
-                className="icon contact-icon email-icon"
-              />
+              <div className="contact-icon-wrapper">
+                <img
+                  src={images["email.png"]}
+                  alt="Email icon"
+                  className="icon contact-icon email-icon"
+                />
+              </div>
               <p>
                 <a
                   href="mailto:almirante.danieljohn@gmail.com"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Email
+                  almirante.danieljohn@gmail.com
                 </a>
               </p>
             </div>
             <div className="contact-info-container">
-              <img
-                src={images["linkedin.png"]}
-                alt="LinkedIn icon"
-                className="icon contact-icon"
-              />
+              <div className="contact-icon-wrapper">
+                <img
+                  src={images["linkedin.png"]}
+                  alt="LinkedIn icon"
+                  className="icon contact-icon"
+                />
+              </div>
               <p>
                 <a
                   href="https://www.linkedin.com/in/daniel-john-almirante-b42782301/"
@@ -564,11 +655,13 @@ const MainView = () => {
               </p>
             </div>
             <div className="contact-info-container">
-              <img
-                src={images["medium-seeklogo.png"]}
-                alt="Medium icon"
-                className="icon contact-icon"
-              />
+              <div className="contact-icon-wrapper">
+                <img
+                  src={images["medium-seeklogo.png"]}
+                  alt="Medium icon"
+                  className="icon contact-icon"
+                />
+              </div>
               <p>
                 <a
                   href="https://medium.com/@almirante.danieljohn"
@@ -584,7 +677,7 @@ const MainView = () => {
 
         {/* Footer Section */}
         <footer>
-          <nav>
+          <nav className="footer-nav">
             <div className="nav-links-container">
               <ul className="nav-links">
                 <li>
@@ -602,7 +695,7 @@ const MainView = () => {
               </ul>
             </div>
           </nav>
-          <p>Copyright &#169; 2024 Daniel John</p>
+          <p>Copyright &#169; 2024 Daniel John Almirante</p>
         </footer>
       </body>
     </div>

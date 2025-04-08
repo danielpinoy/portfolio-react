@@ -1,6 +1,9 @@
-/* GENERAL */
+/* App.css - Universal styles for the entire application */
+
+/* Import fonts */
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 
+/* Variables */
 :root {
   /* Color palette */
   --primary-color: #3a86ff;
@@ -20,219 +23,81 @@
   --space-md: 1rem;
   --space-lg: 1.5rem;
   --space-xl: 2rem;
-  --space-xxl: 3rem;
+  --space-xxl: 2.5rem;
 }
 
-/* Apply the modern design to the entire portfolio */
-.modern-portfolio * {
+/* Reset and Global Styles */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.modern-portfolio {
+body {
   font-family: "Lora", serif;
   line-height: 1.6;
   color: var(--text-dark);
   background-color: var(--background-light);
-  padding: 20px;
 }
 
-.modern-portfolio section {
-  padding: var(--space-lg) var(--space-md);
-  margin-bottom: var(--space-xxl);
-}
-
-.modern-portfolio h1,
-.modern-portfolio h2,
-.modern-portfolio h3,
-.modern-portfolio h4,
-.modern-portfolio h5,
-.modern-portfolio h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Playfair Display", serif;
   color: var(--text-dark);
   margin-bottom: var(--space-md);
 }
 
-.modern-portfolio p {
+p {
   color: var(--text-light);
   font-size: 1.1rem;
   margin-bottom: var(--space-md);
 }
 
-/* NAVIGATION */
-.modern-portfolio #desktop-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: auto;
-  padding: var(--space-md) var(--space-xl);
-  background-color: var(--background-white);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-radius: var(--space-lg);
-  margin-bottom: var(--space-xl);
-}
-
-.modern-portfolio .nav-brand {
-  display: flex;
-  flex-direction: column;
-}
-
-.modern-portfolio .logo {
-  font-size: 1.75rem;
-  font-weight: 700;
-  font-family: "Playfair Display", serif;
-  color: var(--text-dark);
-  position: relative;
-  margin-bottom: var(--space-xs);
-}
-
-.modern-portfolio .logo::after {
-  content: "";
-  position: absolute;
-  width: 30%;
-  height: 3px;
-  bottom: -8px;
-  left: 0;
-  background-color: var(--secondary-color);
-}
-
-.modern-portfolio .tagline {
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.9rem;
-  color: var(--text-light);
-  margin-top: var(--space-xs);
-}
-
-.modern-portfolio .nav-links {
-  display: flex;
-  gap: var(--space-xl);
-  list-style: none;
-  font-size: 1.1rem;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 500;
-}
-
-.modern-portfolio .nav-links a {
+a {
   color: var(--text-dark);
   text-decoration: none;
-  position: relative;
   transition: color 0.3s ease;
 }
 
-.modern-portfolio .nav-links a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -5px;
-  left: 0;
-  background-color: var(--primary-color);
-  transition: width 0.3s ease;
-}
-
-.modern-portfolio .nav-links a:hover {
+a:hover {
   color: var(--primary-color);
 }
 
-.modern-portfolio .nav-links a:hover::after {
-  width: 100%;
-}
-
-/* TRANSITIONS & ANIMATIONS */
-.modern-portfolio a,
-.modern-portfolio .btn {
-  transition: all 300ms ease;
-}
-
-.modern-portfolio .hidden {
+/* Animation classes - used across components */
+.hidden {
   opacity: 0;
   filter: blur(3px);
   transform: translateX(-50px);
   transition: all 1s;
 }
 
-.modern-portfolio .show {
+.show {
   opacity: 1;
   filter: blur(0);
   transform: translateX(0);
 }
 
-/* PROFILE SECTION */
-.modern-portfolio #profile {
-  display: flex;
-  justify-content: center;
-  gap: 5rem;
-  min-height: 80vh;
+/* Common layout elements */
+.section-container {
+  padding: var(--space-lg) var(--space-md);
   margin-bottom: var(--space-xxl);
-  align-items: center;
 }
 
-.modern-portfolio .section__pic-container {
-  display: flex;
-  justify-content: center;
-  height: 400px;
-  width: 400px;
-  margin: auto 0;
-  position: relative;
-}
-
-.modern-portfolio .image-backdrop {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  border: 3px solid var(--primary-color);
-  top: 20px;
-  left: 20px;
-  z-index: -1;
-}
-
-.modern-portfolio .profile-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  box-shadow: var(--box-shadow);
-  border: 5px solid var(--background-white);
-}
-
-.modern-portfolio .section__text {
-  align-self: center;
-  text-align: center;
-}
-
-.modern-portfolio .section__text p {
-  font-weight: 500;
-}
-
-.modern-portfolio .section__text__p1 {
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  font-size: 1.1rem;
-  color: var(--primary-color);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: var(--space-sm);
-}
-
-.modern-portfolio .section__text__p2 {
-  font-size: 1.75rem;
-  margin-bottom: var(--space-lg);
-  color: var(--text-light);
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
-}
-
-.modern-portfolio .title {
-  font-size: 3rem;
+/* Common title styles used throughout the app */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
   text-align: center;
   margin-bottom: var(--space-lg);
   position: relative;
   display: inline-block;
 }
 
-.modern-portfolio .title::after {
+.title::after {
   content: "";
   position: absolute;
   width: 50%;
@@ -242,44 +107,17 @@
   background-color: var(--secondary-color);
 }
 
-.modern-portfolio .name {
-  position: relative;
-  color: var(--text-dark);
+/* Common container styles */
+.details-container {
+  padding: var(--space-xl);
+  background: var(--background-white);
+  border-radius: var(--space-md);
+  box-shadow: var(--box-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Skill tags */
-.modern-portfolio .skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-sm);
-  justify-content: center;
-  margin-bottom: var(--space-lg);
-}
-
-.modern-portfolio .skill-tag {
-  background-color: var(--background-accent);
-  color: var(--primary-color);
-  padding: var(--space-xs) var(--space-md);
-  border-radius: 20px;
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  border: 1px solid var(--primary-color);
-}
-
-/* BUTTONS */
-.modern-portfolio .btn-container {
-  display: flex;
-  justify-content: center;
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
-}
-
-.modern-portfolio .three-button {
-  flex-wrap: wrap;
-}
-
-.modern-portfolio .btn {
+/* Button styles used across the app */
+.btn {
   font-weight: 600;
   transition: all 300ms ease;
   padding: 0.75rem 1.5rem;
@@ -288,501 +126,101 @@
   border-radius: 2rem;
   font-family: "Montserrat", sans-serif;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 }
 
-.modern-portfolio .btn-color-1,
-.modern-portfolio .btn-color-2 {
+.btn-color-1,
+.btn-color-2 {
   border: 2px solid var(--primary-color);
 }
 
-.modern-portfolio .btn-color-1:hover,
-.modern-portfolio .btn-color-2:hover {
-  cursor: pointer;
-  transform: translateY(-3px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.modern-portfolio .btn-color-1,
-.modern-portfolio .btn-color-2:hover {
+.btn-color-1,
+.btn-color-2:hover {
   background: var(--primary-color);
   color: white;
 }
 
-.modern-portfolio .btn-color-1:hover {
+.btn-color-1:hover {
   background: var(--primary-dark);
 }
 
-.modern-portfolio .btn-color-2 {
+.btn-color-2 {
   background: transparent;
   color: var(--primary-color);
 }
 
-/* SOCIAL LINKS */
-.modern-portfolio #socials-container {
-  display: flex;
-  justify-content: center;
-  margin-top: var(--space-lg);
-  gap: var(--space-md);
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.modern-portfolio .social-link {
-  background-color: var(--background-white);
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--box-shadow);
-  transition: transform 0.3s ease;
-}
-
-.modern-portfolio .social-link:hover {
-  transform: translateY(-5px);
-}
-
-.modern-portfolio .icon {
-  cursor: pointer;
-  height: 24px;
-  width: 24px;
-  transition: transform 0.3s ease;
-}
-
-.modern-portfolio .icon:hover {
-  transform: scale(1.1);
-}
-
-.modern-portfolio .github-btn {
+/* GitHub button styles used in multiple components */
+.github-btn {
   display: grid;
   place-items: center;
   background: var(--background-white);
   border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0);
+  border: 1px solid transparent;
   cursor: pointer;
   transition: transform 0.5s;
   padding: 0.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.modern-portfolio .github-btn:hover,
-.modern-portfolio .btn:hover {
+.github-btn:hover {
   border: 1px solid rgba(0, 0, 0, 0.1);
   transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.modern-portfolio .github-btn svg {
+.github-btn svg {
   transition: transform 0.5s;
 }
 
-.modern-portfolio .github-btn:hover svg {
+.github-btn:hover svg {
   transform: scale(0.9);
   fill: var(--primary-color);
 }
 
-/* ABOUT SECTION */
-.modern-portfolio #about {
-  position: relative;
-}
-
-.modern-portfolio .about-containers {
-  gap: var(--space-xl);
-  margin-bottom: var(--space-xl);
-  margin-top: var(--space-xl);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.modern-portfolio .about-details-container {
-  justify-content: center;
-  flex-direction: column;
-}
-
-.modern-portfolio .details-container {
-  padding: var(--space-xl);
-  flex: 1;
-  background: var(--background-white);
-  border-radius: var(--space-md);
-  border: none;
-  text-align: center;
-  box-shadow: var(--box-shadow);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.modern-portfolio .details-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.modern-portfolio .detail-icon-wrapper {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto var(--space-md);
-  background-color: var(--background-accent);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modern-portfolio .text-container {
-  background: var(--background-white);
-  padding: var(--space-xl);
-  border-radius: var(--space-md);
-  box-shadow: var(--box-shadow);
-  margin-top: var(--space-xl);
-}
-
-.modern-portfolio .text-container p {
-  text-align: left;
-  line-height: 1.8;
-}
-
-/* EXPERIENCE SECTION */
-.modern-portfolio #experience {
-  position: relative;
-}
-
-.modern-portfolio .experience-sub-title {
-  color: var(--text-dark);
-  font-weight: 600;
-  font-size: 1.5rem;
-  margin-bottom: var(--space-xl);
-  position: relative;
-  display: inline-block;
-  padding-bottom: var(--space-sm);
-}
-
-.modern-portfolio .experience-sub-title::after {
-  content: "";
-  position: absolute;
-  width: 30%;
-  height: 3px;
-  bottom: -3px;
-  left: 0;
-  background-color: var(--secondary-color);
-}
-
-.modern-portfolio .skills-card {
-  padding: var(--space-xl);
-}
-
-.modern-portfolio .article-container {
-  display: flex;
-  text-align: initial;
-  flex-wrap: wrap;
-  gap: var(--space-xl);
-  justify-content: space-around;
-}
-
-.modern-portfolio .skill-item {
-  display: flex;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
-  padding: var(--space-md);
-  background-color: var(--background-accent);
-  border-radius: var(--space-md);
-  width: 45%;
+/* Icon styles used throughout the app */
+.icon {
+  cursor: pointer;
+  height: 24px;
+  width: 24px;
   transition: transform 0.3s ease;
 }
 
-.modern-portfolio .skill-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.icon:hover {
+  transform: scale(1.1);
 }
 
-.modern-portfolio .skill-item h3 {
-  font-size: 1.1rem;
-  margin-bottom: var(--space-xs);
-}
-
-.modern-portfolio .skill-level {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.modern-portfolio .skill-bar {
-  height: 6px;
-  background-color: #e0e0e0;
-  border-radius: 3px;
-  margin-bottom: var(--space-xs);
-  position: relative;
-}
-
-.modern-portfolio .skill-bar::before {
-  content: "";
-  position: absolute;
-  height: 100%;
-  border-radius: 3px;
-  background-color: var(--primary-color);
-}
-
-.modern-portfolio .skill-bar.experienced::before {
-  width: 90%;
-}
-
-.modern-portfolio .skill-bar.intermediate::before {
-  width: 70%;
-}
-
-.modern-portfolio .skill-bar.basic::before {
-  width: 40%;
-}
-
-.modern-portfolio .skill-level p {
-  font-size: 0.8rem;
-  margin: 0;
-  color: var(--primary-color);
-  font-weight: 500;
-}
-
-/* PROJECTS SECTION */
-.modern-portfolio #projects {
-  position: relative;
-  margin-top: var(--space-xl);
-}
-
-.modern-portfolio .projects-about-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--space-xl);
-  margin-bottom: var(--space-xxl);
-}
-
-.modern-portfolio .project-card {
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.modern-portfolio .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.modern-portfolio .project-img-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--space-md) var(--space-md) 0 0;
-  height: 200px;
-}
-
-.modern-portfolio .project-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.5s ease;
-}
-
-.modern-portfolio .project-card:hover .project-img {
-  transform: scale(1.05);
-}
-
-.modern-portfolio .project-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  padding: var(--space-md);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.modern-portfolio .project-card:hover .project-overlay {
-  opacity: 1;
-}
-
-.modern-portfolio .project-tech {
-  color: white;
-  font-size: 0.9rem;
-  font-family: "Montserrat", sans-serif;
-}
-
-.modern-portfolio .project-title {
-  margin: var(--space-md) 0;
-  font-size: 1.4rem;
-}
-
-.modern-portfolio .project-description {
-  margin-bottom: var(--space-lg);
-  color: var(--text-light);
-  font-size: 0.95rem;
-}
-
-/* CONTACT SECTION */
-.modern-portfolio #contact {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 60vh;
-  background-color: var(--background-white);
-  border-radius: var(--space-lg);
-  padding: var(--space-xxl);
-  box-shadow: var(--box-shadow);
+/* Common footer styles */
+footer {
+  text-align: center;
+  padding: var(--space-lg);
   margin-top: var(--space-xxl);
 }
 
-.modern-portfolio .contact-info-upper-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: var(--space-lg);
-  margin: var(--space-xl) auto;
-}
-
-.modern-portfolio .contact-info-container {
-  display: flex;
-  align-items: center;
-  gap: var(--space-md);
-  background-color: var(--background-accent);
-  padding: var(--space-md) var(--space-lg);
-  border-radius: var(--space-lg);
-  transition: transform 0.3s ease;
-  box-shadow: var(--box-shadow);
-}
-
-.modern-portfolio .contact-info-container:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-
-.modern-portfolio .contact-icon-wrapper {
-  width: 40px;
-  height: 40px;
-  background-color: var(--background-white);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modern-portfolio .contact-info-container p {
-  margin: 0;
-}
-
-.modern-portfolio .contact-info-container a {
-  color: var(--primary-color);
-  font-weight: 500;
-  font-family: "Montserrat", sans-serif;
-  text-decoration: none;
-  position: relative;
-}
-
-.modern-portfolio .contact-info-container a::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 2px;
-  bottom: -3px;
-  left: 0;
-  background-color: var(--primary-color);
-  transition: width 0.3s ease;
-}
-
-.modern-portfolio .contact-info-container a:hover::after {
-  width: 100%;
-}
-
-/* FOOTER */
-.modern-portfolio footer {
-  min-height: 20vh;
-  margin: var(--space-xl) 0;
-  background-color: var(--background-white);
-  border-radius: var(--space-lg);
-  padding: var(--space-lg);
-  box-shadow: var(--box-shadow);
-}
-
-.modern-portfolio .footer-nav {
-  display: flex;
-  justify-content: center;
-  margin-bottom: var(--space-lg);
-  background: transparent;
-  height: auto;
-  box-shadow: none;
-}
-
-.modern-portfolio footer p {
-  text-align: center;
-  font-size: 0.9rem;
-  color: var(--text-light);
-}
-
-/* RESPONSIVE STYLES */
+/* Global responsive breakpoints */
 @media screen and (max-width: 1024px) {
-  .modern-portfolio .skill-item {
-    width: 100%;
-  }
-
-  .modern-portfolio #profile {
-    gap: var(--space-lg);
+  .title {
+    font-size: 2.2rem;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .modern-portfolio #desktop-nav {
+  .btn-container {
     flex-direction: column;
-    padding: var(--space-md);
-  }
-
-  .modern-portfolio .nav-brand {
-    margin-bottom: var(--space-md);
-  }
-
-  .modern-portfolio .nav-links {
-    gap: var(--space-md);
-  }
-
-  .modern-portfolio #profile {
-    flex-direction: column;
-    text-align: center;
-    padding: var(--space-lg) 0;
-  }
-
-  .modern-portfolio .section__pic-container {
-    height: 300px;
-    width: 300px;
-  }
-
-  .modern-portfolio .contact-info-upper-container {
-    flex-direction: column;
-  }
-
-  .modern-portfolio .skill-item {
-    width: 100%;
+    align-items: center;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .modern-portfolio .section__pic-container {
-    height: 250px;
-    width: 250px;
+  .title {
+    font-size: 1.8rem;
   }
 
-  .modern-portfolio .nav-links {
-    gap: var(--space-sm);
-    font-size: 0.9rem;
-  }
-
-  .modern-portfolio .title {
-    font-size: 2.2rem;
-  }
-
-  .modern-portfolio .section__text__p2 {
-    font-size: 1.3rem;
-  }
-
-  .modern-portfolio .skill-item {
-    padding: var(--space-sm);
-  }
-
-  .modern-portfolio .contact-info-container {
-    width: 100%;
-  }
-
-  .modern-portfolio .btn-container {
-    flex-direction: column;
+  p {
+    font-size: 1rem;
   }
 }

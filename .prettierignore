@@ -1,2 +1,3 @@
-# .prettierignore
-**/*.min.css
+# Ignore minified files
+*.min.css
+*.min.js

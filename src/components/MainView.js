@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { projects } from "../utils/projects.js";
 import danielCV from "../images/Daniel-John-Almirante.pdf";
 import { caseStudyImages } from "../utils/projects.js";
+// import "./MainView_Style.css";
+import "./MainView_Style.min.css";
 
 const MainView = () => {
   const [profileRef, profileView] = useInViewOnce();
@@ -390,7 +392,7 @@ const MainView = () => {
                 <h2 className="experience-sub-title project-title">Chat Box</h2>
                 <p className="project-description">
                   A mobile chat application built with React Native that allows
-                  real-time messaging with image and location sharing.
+                  real-time messaging with location sharing.
                 </p>
                 <div className="btn-container">
                   <button
@@ -514,7 +516,7 @@ const MainView = () => {
                     View Project
                   </button>
                   <button
-                    className="btn btn-color-1 project-btn"
+                    className="btn btn-color-2 project-btn"
                     onClick={() => {
                       if (imagesLoaded) {
                         navigate("/case-study/MyFlix");

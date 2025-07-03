@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Highlight, themes } from "prism-react-renderer";
-// Removed figlet import - using custom ASCII art instead
 import {
   Box,
   Typography,
@@ -23,6 +22,7 @@ import {
   Container,
   Stack,
   Divider,
+  Avatar,
 } from "@mui/material";
 import {
   GitHub,
@@ -33,28 +33,39 @@ import {
   Code,
   Storage,
   Web,
+  Folder,
+  Description,
 } from "@mui/icons-material";
+
+// Import your images - you'll need to make sure this import works
+import profilePic from "../images/profile-pic.jpg";
 
 // Terminal-themed MUI theme
 const terminalTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#00ff41", // Matrix green
+      main: "#00ff41",
       light: "#4ade80",
       dark: "#16a34a",
     },
     secondary: {
-      main: "#06b6d4", // Cyan
+      main: "#06b6d4",
       light: "#22d3ee",
       dark: "#0891b2",
     },
     warning: {
-      main: "#fbbf24", // Yellow
+      main: "#fbbf24",
+    },
+    error: {
+      main: "#ff5f57",
+    },
+    success: {
+      main: "#28ca42",
     },
     background: {
-      default: "#0a0a0a", // Deep black
-      paper: "#1a1a1a", // Dark gray
+      default: "#0a0a0a",
+      paper: "#1a1a1a",
     },
     text: {
       primary: "#00ff41",
@@ -66,19 +77,26 @@ const terminalTheme = createTheme({
     fontSize: 14,
     h1: {
       fontFamily: '"Fira Code", monospace',
-      fontSize: "2rem",
+      fontSize: "2.5rem",
       fontWeight: 700,
       color: "#00ff41",
     },
     h2: {
       fontFamily: '"Fira Code", monospace',
-      fontSize: "1.5rem",
+      fontSize: "1.8rem",
       fontWeight: 600,
       color: "#06b6d4",
+    },
+    h3: {
+      fontFamily: '"Fira Code", monospace',
+      fontSize: "1.2rem",
+      fontWeight: 500,
+      color: "#fbbf24",
     },
     body1: {
       fontFamily: '"Fira Code", monospace',
       fontSize: "0.9rem",
+      lineHeight: 1.6,
     },
   },
   components: {
@@ -87,6 +105,7 @@ const terminalTheme = createTheme({
         root: {
           backgroundColor: "#1a1a1a",
           border: "1px solid #333",
+          borderRadius: 0,
         },
       },
     },
@@ -98,6 +117,9 @@ const terminalTheme = createTheme({
           fontSize: "0.9rem",
           minWidth: "auto",
           padding: "6px 16px",
+          "&.Mui-selected": {
+            color: "#00ff41",
+          },
         },
       },
     },
@@ -111,6 +133,12 @@ const terminalTheme = createTheme({
               border: "none",
             },
           },
+          "& .MuiInput-root": {
+            color: "#00ff41",
+            "&:before": {
+              borderBottom: "1px solid #333",
+            },
+          },
         },
       },
     },
@@ -122,7 +150,39 @@ const MainView = () => {
   const [commandHistory, setCommandHistory] = useState([]);
   const [currentCommand, setCurrentCommand] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const [asciiArt, setAsciiArt] = useState("");
+  const [typingText, setTypingText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  // ASCII art for the name
+  const asciiName = `
+╔═══════════════════════════════════════════════════════════════╗
+║  ____              _      _       _       _                   ║
+║ |  _ \\  __ _ _ __ (_) ___| |     | | ___ | |__  _ __          ║
+║ | | | |/ _\` | '_ \\| |/ _ \\ |  _  | |/ _ \\| '_ \\| '_ \\         ║
+║ | |_| | (_| | | | | |  __/ | | |_| | (_) | | | | | | |        ║
+║ |____/ \\__,_|_| |_|_|\\___|_|  \\___/ \\___/|_| |_|_| |_|        ║
+║                                                               ║
+║              Full Stack Developer | Cyprus                    ║
+╚═══════════════════════════════════════════════════════════════╝`;
+
+  // Typing effect for welcome message
+  useEffect(() => {
+    const text =
+      "Welcome to my terminal portfolio. Type 'help' for commands...";
+    let index = 0;
+
+    const typeChar = () => {
+      if (index < text.length) {
+        setTypingText(text.substring(0, index + 1));
+        index++;
+        setTimeout(typeChar, 50);
+      } else {
+        setIsTyping(false);
+      }
+    };
+
+    typeChar();
+  }, []);
 
   // Cursor blink effect
   useEffect(() => {
@@ -137,68 +197,75 @@ const MainView = () => {
   const commands = {
     help: "Show available commands",
     ls: "List available sections",
-    "cd about": "Navigate to about section",
-    "cd skills": "Navigate to skills section",
-    "cd projects": "Navigate to projects section",
-    "cd contact": "Navigate to contact section",
+    "cd <section>": "Navigate to section (about/skills/projects/contact)",
     "cd ~": "Go back to home",
-    whoami: "Display user info",
-    clear: "Clear terminal",
+    whoami: "Display developer info",
+    clear: "Clear terminal history",
     "cat resume.pdf": "Download resume",
+    github: "Open GitHub profile",
+    linkedin: "Open LinkedIn profile",
   };
 
   const executeCommand = (cmd) => {
     const trimmedCmd = cmd.trim().toLowerCase();
     let output = "";
 
-    switch (trimmedCmd) {
-      case "help":
-        output = Object.entries(commands)
-          .map(([cmd, desc]) => `${cmd.padEnd(15)} - ${desc}`)
+    if (trimmedCmd === "help") {
+      output =
+        "Available commands:\n\n" +
+        Object.entries(commands)
+          .map(([cmd, desc]) => `  ${cmd.padEnd(20)} - ${desc}`)
           .join("\n");
-        break;
-      case "ls":
-        output = "about/    skills/    projects/    contact/    resume.pdf";
-        break;
-      case "cd about":
-        setCurrentSection(1);
-        output = "Navigating to about section...";
-        break;
-      case "cd skills":
-        setCurrentSection(2);
-        output = "Navigating to skills section...";
-        break;
-      case "cd projects":
-        setCurrentSection(3);
-        output = "Navigating to projects section...";
-        break;
-      case "cd contact":
-        setCurrentSection(4);
-        output = "Navigating to contact section...";
-        break;
-      case "cd ~":
-        setCurrentSection(0);
-        output = "Returning to home directory...";
-        break;
-      case "whoami":
-        output =
-          "daniel-john-almirante\\nFull Stack Developer\\nLocation: ~/portfolio";
-        break;
-      case "clear":
-        setCommandHistory([]);
-        return;
-      case "cat resume.pdf":
-        output = "Opening resume... (Download would trigger here)";
-        break;
-      default:
-        output = `Command not found: ${cmd}\\nType 'help' for available commands.`;
+    } else if (trimmedCmd === "ls") {
+      output =
+        "📁 about/    📁 skills/    📁 projects/    📁 contact/    📄 resume.pdf";
+    } else if (trimmedCmd.startsWith("cd ")) {
+      const target = trimmedCmd.substring(3);
+      const sectionMap = {
+        about: 1,
+        skills: 2,
+        projects: 3,
+        contact: 4,
+        "~": 0,
+      };
+
+      if (sectionMap.hasOwnProperty(target)) {
+        setCurrentSection(sectionMap[target]);
+        output = `Navigating to ${target === "~" ? "home" : target}...`;
+      } else {
+        output = `bash: cd: ${target}: No such file or directory`;
+      }
+    } else if (trimmedCmd === "whoami") {
+      output = `User: daniel-john-almirante
+Role: Full Stack Developer
+Location: Nicosia, Cyprus
+Status: Available for opportunities`;
+    } else if (trimmedCmd === "clear") {
+      setCommandHistory([]);
+      return;
+    } else if (trimmedCmd === "cat resume.pdf") {
+      output = "📄 Opening resume... (Download would trigger here)";
+      // Add actual download logic here
+    } else if (trimmedCmd === "github") {
+      window.open("https://github.com/danielpinoy", "_blank");
+      output = "Opening GitHub profile in new tab...";
+    } else if (trimmedCmd === "linkedin") {
+      window.open(
+        "https://www.linkedin.com/in/daniel-john-almirante-b42782301/",
+        "_blank"
+      );
+      output = "Opening LinkedIn profile in new tab...";
+    } else if (trimmedCmd === "") {
+      return;
+    } else {
+      output = `Command not found: ${cmd}\nType 'help' for available commands.`;
     }
 
     setCommandHistory((prev) => [...prev, { command: cmd, output }]);
   };
 
   const handleCommandSubmit = (e) => {
-    if (e.key === "Enter" && currentCommand.trim()) {
+    if (e.key === "Enter") {
       executeCommand(currentCommand);
       setCurrentCommand("");
     }
@@ -207,7 +274,7 @@ const MainView = () => {
   const skillsData = [
     { name: "React", level: 90, color: "#61DAFB", icon: <Web /> },
     { name: "Node.js", level: 85, color: "#68A063", icon: <Code /> },
-    { name: "JavaScript", level: 80, color: "#F7DF1E", icon: <Code /> },
+    { name: "JavaScript", level: 85, color: "#F7DF1E", icon: <Code /> },
     { name: "MongoDB", level: 75, color: "#4DB33D", icon: <Storage /> },
     { name: "Express", level: 85, color: "#ffffff", icon: <Code /> },
     { name: "TypeScript", level: 70, color: "#007ACC", icon: <Code /> },
@@ -218,35 +285,41 @@ const MainView = () => {
   const projectsData = [
     {
       name: "ChatBox",
-      description: "Real-time messaging app with React Native",
-      tech: ["React Native", "Firebase", "Expo"],
+      description: "Real-time messaging app with React Native and Firebase",
+      tech: ["React Native", "Firebase", "Expo", "AsyncStorage"],
       status: "deployed",
       lastCommit: "2 days ago",
       github: "https://github.com/danielpinoy/ChatRoom",
+      stars: 12,
     },
     {
       name: "MeetApp",
-      description: "Serverless PWA with Google Calendar API",
-      tech: ["React", "TDD", "Google API"],
+      description:
+        "Serverless PWA for event management with Google Calendar API",
+      tech: ["React", "TDD", "Google API", "Recharts"],
       status: "deployed",
       lastCommit: "1 week ago",
       github: "https://github.com/danielpinoy/meet",
+      stars: 8,
     },
     {
       name: "RetroFlix",
-      description: "Historical movies web application",
-      tech: ["React", "Redux", "MongoDB"],
+      description: "Historical movies web application with user authentication",
+      tech: ["React", "Redux", "MongoDB", "JWT"],
       status: "deployed",
       lastCommit: "3 days ago",
       github: "https://github.com/danielpinoy/historic-movies-client",
+      demo: "https://kaleidoscopic-tiramisu-9e52da.netlify.app/login",
+      stars: 15,
     },
     {
       name: "MyFlix",
-      description: "Angular movie app with user management",
-      tech: ["Angular", "Material UI", "TypeScript"],
+      description: "Angular movie database with Material UI design",
+      tech: ["Angular", "Material UI", "TypeScript", "RxJS"],
       status: "deployed",
       lastCommit: "5 days ago",
       github: "https://github.com/danielpinoy/myFlixClient",
+      stars: 6,
     },
   ];
 
@@ -256,21 +329,43 @@ const MainView = () => {
         <Typography
           component="pre"
           sx={{
-            fontSize: "0.5rem",
+            fontSize: { xs: "0.6rem", sm: "0.8rem", md: "1rem" },
             color: "primary.main",
-            lineHeight: 1.1,
+            lineHeight: 1.2,
             overflow: "auto",
             fontFamily: "monospace",
+            whiteSpace: "pre",
           }}
         >
-          {asciiArt}
+          {asciiName}
         </Typography>
       </Box>
 
-      <Box mb={4}>
-        <Typography variant="h2" color="secondary.main"></Typography>
+      <Box mb={4} display="flex" alignItems="center" gap={2}>
+        <Box
+          component="img"
+          src={profilePic}
+          alt="Daniel John Almirante"
+          sx={{
+            width: 100,
+            height: 120,
+            border: "3px solid #00ff41",
+            boxShadow: "0 0 20px rgba(0, 255, 65, 0.5)",
+            borderRadius: 1, // Slightly rounded corners
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        />
+        <Box>
+          <Typography variant="h2" color="secondary.main" gutterBottom>
+            $ whoami
+          </Typography>
+          <Typography color="primary.main">
+            {typingText}
+            {isTyping && <span style={{ opacity: showCursor ? 1 : 0 }}>█</span>}
+          </Typography>
+        </Box>
       </Box>
-
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, height: "100%" }}>
@@ -279,14 +374,19 @@ const MainView = () => {
             </Typography>
             <Stack spacing={1}>
               <Typography color="primary.main">
-                Status: Available for work
+                <span style={{ color: "#06b6d4" }}>Status:</span> 🟢 Available
+                for work
               </Typography>
               <Typography color="primary.main">
-                Location: Nicosia, Cyprus
+                <span style={{ color: "#06b6d4" }}>Location:</span> 📍 Nicosia,
+                Cyprus
               </Typography>
-              <Typography color="primary.main">Experience: 2+ years</Typography>
               <Typography color="primary.main">
-                Last activity: Just now
+                <span style={{ color: "#06b6d4" }}>Experience:</span> 2+ years
+              </Typography>
+              <Typography color="primary.main">
+                <span style={{ color: "#06b6d4" }}>Focus:</span> Full Stack
+                Development
               </Typography>
             </Stack>
           </Paper>
@@ -295,22 +395,47 @@ const MainView = () => {
         <Grid item xs={12} md={6}>
           <Paper sx={{ p: 3, height: "100%" }}>
             <Typography variant="h3" color="warning.main" gutterBottom>
-              $ ls -la quick_stats/
+              $ ls -la quick_links/
             </Typography>
             <Stack spacing={1}>
-              <Typography color="primary.main">total 4 projects</Typography>
-              <Typography color="primary.main">
-                drwxr-xr-x 2 daniel react_apps/
-              </Typography>
-              <Typography color="primary.main">
-                drwxr-xr-x 2 daniel node_apps/
-              </Typography>
-              <Typography color="primary.main">
-                drwxr-xr-x 2 daniel angular_apps/
-              </Typography>
-              <Typography color="primary.main">
-                -rw-r--r-- 1 daniel resume.pdf
-              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <GitHub fontSize="small" />
+                <Link
+                  href="https://github.com/danielpinoy"
+                  target="_blank"
+                  color="primary.main"
+                  underline="hover"
+                >
+                  github.com/danielpinoy
+                </Link>
+              </Box>
+              <Box display="flex" alignItems="center" gap={1}>
+                <LinkedIn fontSize="small" />
+                <Link
+                  href="https://www.linkedin.com/in/daniel-john-almirante-b42782301/"
+                  target="_blank"
+                  color="primary.main"
+                  underline="hover"
+                >
+                  LinkedIn Profile
+                </Link>
+              </Box>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Email fontSize="small" />
+                <Link
+                  href="mailto:almirante.danieljohn@gmail.com"
+                  color="primary.main"
+                  underline="hover"
+                >
+                  Send Email
+                </Link>
+              </Box>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Description fontSize="small" />
+                <Typography color="primary.main" sx={{ cursor: "pointer" }}>
+                  Download Resume
+                </Typography>
+              </Box>
             </Stack>
           </Paper>
         </Grid>
@@ -324,35 +449,79 @@ const MainView = () => {
         $ cat about.md
       </Typography>
 
-      <Paper sx={{ p: 4 }}>
-        <Typography variant="h2" color="warning.main" gutterBottom>
-          # About Me
-        </Typography>
-        <Typography color="text.primary" paragraph>
-          I'm a Full Stack Developer specializing in creating user-friendly and
-          responsive web applications. With 2+ years of experience in frontend
-          development and a passion for clean, efficient code.
-        </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 3, height: "100%", textAlign: "center" }}>
+            <Box
+              component="img"
+              src={profilePic}
+              alt="Daniel John Almirante"
+              sx={{
+                width: 250,
+                height: 300,
+                margin: "0 auto 2rem",
+                border: "3px solid #00ff41",
+                boxShadow: "0 0 30px rgba(0, 255, 65, 0.3)",
+                borderRadius: 2, // Slightly rounded corners
+                objectFit: "cover",
+                objectPosition: "center",
+                display: "block",
+              }}
+            />
+            <Typography variant="h3" color="warning.main" gutterBottom>
+              Daniel John Almirante
+            </Typography>
+            <Typography color="text.primary">Full Stack Developer</Typography>
+            <Typography color="text.secondary" variant="body2">
+              Nicosia, Cyprus
+            </Typography>
+          </Paper>
+        </Grid>
 
-        <Typography variant="h3" color="warning.main" sx={{ mt: 3, mb: 2 }}>
-          ## Education
-        </Typography>
-        <Typography color="text.primary">
-          • Entertainment and Multimedia Computing (Undergraduate)
-        </Typography>
+        <Grid item xs={12} md={8}>
+          <Paper sx={{ p: 4, height: "100%" }}>
+            <Typography variant="h2" color="warning.main" gutterBottom>
+              # About Me
+            </Typography>
+            <Typography color="text.primary" paragraph>
+              I'm a passionate Full Stack Developer with 2+ years of experience
+              building user-friendly and responsive web applications. I
+              specialize in modern JavaScript frameworks and enjoy creating
+              clean, efficient code that solves real-world problems.
+            </Typography>
 
-        <Typography variant="h3" color="warning.main" sx={{ mt: 3, mb: 2 }}>
-          ## Interests
-        </Typography>
-        <Typography color="text.primary">
-          • Video Games 🎮
-          <br />
-          • Fitness & Gym 💪
-          <br />
-          • Cloud Computing ☁️
-          <br />• Open Source Contributing 🔧
-        </Typography>
-      </Paper>
+            <Typography variant="h3" color="warning.main" sx={{ mt: 3, mb: 2 }}>
+              ## Background
+            </Typography>
+            <Typography color="text.primary" paragraph>
+              • 🎓 Studied Entertainment and Multimedia Computing
+              <br />
+              • 💻 Self-taught developer with continuous learning mindset
+              <br />
+              • 🌍 Based in Cyprus, open to remote opportunities
+              <br />• 🚀 Focused on React, Node.js, and cloud technologies
+            </Typography>
+
+            <Typography variant="h3" color="warning.main" sx={{ mt: 3, mb: 2 }}>
+              ## Interests
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <Typography color="text.primary">
+                  • 🎮 Video Games
+                  <br />• 💪 Fitness & Gym
+                </Typography>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography color="text.primary">
+                  • ☁️ Cloud Computing
+                  <br />• 🔧 Open Source
+                </Typography>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
   );
 
@@ -362,79 +531,92 @@ const MainView = () => {
         $ ./skills --list --verbose
       </Typography>
 
-      <Stack spacing={3}>
-        {skillsData.map((skill, index) => (
-          <Box key={skill.name}>
-            <Paper sx={{ p: 2 }}>
-              <Box display="flex" alignItems="center" mb={2}>
-                <Box sx={{ color: skill.color, mr: 2 }}>{skill.icon}</Box>
-                <Typography variant="h3" sx={{ minWidth: 120 }}>
-                  {skill.name}
-                </Typography>
-                <Box flexGrow={1} mx={2}>
-                  <LinearProgress
-                    variant="determinate"
-                    value={skill.level}
-                    sx={{
-                      height: 8,
-                      borderRadius: 5,
-                      backgroundColor: "rgba(255,255,255,0.1)",
-                      "& .MuiLinearProgress-bar": {
-                        backgroundColor: skill.color,
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={8}>
+          <Stack spacing={2}>
+            {skillsData.map((skill) => (
+              <Paper key={skill.name} sx={{ p: 2 }}>
+                <Box display="flex" alignItems="center" mb={1}>
+                  <Box sx={{ color: skill.color, mr: 2 }}>{skill.icon}</Box>
+                  <Typography variant="h3" sx={{ minWidth: 120 }}>
+                    {skill.name}
+                  </Typography>
+                  <Box flexGrow={1} mx={2}>
+                    <LinearProgress
+                      variant="determinate"
+                      value={skill.level}
+                      sx={{
+                        height: 10,
                         borderRadius: 5,
-                      },
-                    }}
-                  />
+                        backgroundColor: "rgba(255,255,255,0.1)",
+                        "& .MuiLinearProgress-bar": {
+                          backgroundColor: skill.color,
+                          borderRadius: 5,
+                        },
+                      }}
+                    />
+                  </Box>
+                  <Typography color="primary.main" sx={{ minWidth: 50 }}>
+                    {skill.level}%
+                  </Typography>
                 </Box>
-                <Typography color="primary.main" sx={{ minWidth: 50 }}>
-                  {skill.level}%
-                </Typography>
-              </Box>
-            </Paper>
-          </Box>
-        ))}
-      </Stack>
+              </Paper>
+            ))}
+          </Stack>
+        </Grid>
 
-      <Box mt={4}>
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h3" color="warning.main" gutterBottom>
-            $ cat tech_stack.json
-          </Typography>
-          <Highlight
-            theme={themes.vsDark}
-            code={JSON.stringify(
-              {
-                frontend: [
-                  "React",
-                  "Angular",
-                  "HTML5",
-                  "CSS3",
-                  "JavaScript",
-                  "TypeScript",
-                ],
-                backend: ["Node.js", "Express", "MongoDB", "Firebase"],
-                tools: ["Git", "VS Code", "Postman", "Figma"],
-                testing: ["Jest", "React Testing Library", "Puppeteer"],
-              },
-              null,
-              2
-            )}
-            language="json"
-          >
-            {({ className, style, tokens, getLineProps, getTokenProps }) => (
-              <pre className={className} style={style}>
-                {tokens.map((line, i) => (
-                  <div key={i} {...getLineProps({ line })}>
-                    {line.map((token, key) => (
-                      <span key={key} {...getTokenProps({ token })} />
+        <Grid item xs={12} md={4}>
+          <Paper sx={{ p: 3, height: "fit-content" }}>
+            <Typography variant="h3" color="warning.main" gutterBottom>
+              $ cat tech_stack.json
+            </Typography>
+            <Box sx={{ mt: 2 }}>
+              <Highlight
+                theme={themes.vsDark}
+                code={JSON.stringify(
+                  {
+                    frontend: [
+                      "React",
+                      "Angular",
+                      "HTML5",
+                      "CSS3",
+                      "JavaScript",
+                      "TypeScript",
+                    ],
+                    backend: ["Node.js", "Express", "MongoDB", "Firebase"],
+                    tools: ["Git", "VS Code", "Postman", "Figma"],
+                    testing: ["Jest", "React Testing Library", "Puppeteer"],
+                  },
+                  null,
+                  2
+                )}
+                language="json"
+              >
+                {({
+                  className,
+                  style,
+                  tokens,
+                  getLineProps,
+                  getTokenProps,
+                }) => (
+                  <pre
+                    className={className}
+                    style={{ ...style, fontSize: "0.8rem", margin: 0 }}
+                  >
+                    {tokens.map((line, i) => (
+                      <div key={i} {...getLineProps({ line })}>
+                        {line.map((token, key) => (
+                          <span key={key} {...getTokenProps({ token })} />
+                        ))}
+                      </div>
                     ))}
-                  </div>
-                ))}
-              </pre>
-            )}
-          </Highlight>
-        </Paper>
-      </Box>
+                  </pre>
+                )}
+              </Highlight>
+            </Box>
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
   );
 
@@ -444,19 +626,23 @@ const MainView = () => {
         $ git log --oneline --graph
       </Typography>
 
-      <Stack spacing={3}>
-        {projectsData.map((project, index) => (
-          <Box key={project.name}>
+      <Grid container spacing={3}>
+        {projectsData.map((project) => (
+          <Grid item xs={12} md={6} key={project.name}>
             <Card
               sx={{
-                transition: "transform 0.2s, box-shadow 0.2s",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                transition: "all 0.3s ease",
                 "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 8px 25px rgba(0,255,65,0.15)",
+                  transform: "translateY(-8px)",
+                  boxShadow: "0 12px 30px rgba(0,255,65,0.2)",
+                  border: "1px solid #00ff41",
                 },
               }}
             >
-              <CardContent>
+              <CardContent sx={{ flexGrow: 1 }}>
                 <Box
                   display="flex"
                   justifyContent="space-between"
@@ -465,19 +651,24 @@ const MainView = () => {
                 >
                   <Box>
                     <Typography variant="h2" color="warning.main" gutterBottom>
-                      📁 {project.name}
+                      <Folder sx={{ mr: 1, verticalAlign: "middle" }} />
+                      {project.name}
                     </Typography>
-                    <Typography color="text.primary">
+                    <Typography color="text.primary" paragraph>
                       {project.description}
                     </Typography>
                   </Box>
-                  <Chip
-                    label={project.status}
-                    color={
-                      project.status === "deployed" ? "success" : "warning"
-                    }
-                    size="small"
-                  />
+                  <Stack direction="column" spacing={0.5} alignItems="flex-end">
+                    <Chip
+                      label={project.status}
+                      color="success"
+                      size="small"
+                      sx={{ fontSize: "0.7rem" }}
+                    />
+                    <Typography variant="caption" color="text.secondary">
+                      ⭐ {project.stars}
+                    </Typography>
+                  </Stack>
                 </Box>
 
                 <Box display="flex" flexWrap="wrap" gap={1} mb={2}>
@@ -487,8 +678,9 @@ const MainView = () => {
                       label={tech}
                       size="small"
                       sx={{
-                        backgroundColor: "rgba(6,182,212,0.1)",
+                        backgroundColor: "rgba(6,182,212,0.2)",
                         color: "secondary.main",
+                        fontSize: "0.75rem",
                       }}
                     />
                   ))}
@@ -503,29 +695,35 @@ const MainView = () => {
                   Last commit: {project.lastCommit}
                 </Typography>
 
-                <Box display="flex" gap={2}>
+                <Box display="flex" gap={2} mt="auto">
                   <Button
                     variant="outlined"
                     color="primary"
                     size="small"
-                    startIcon={<Launch />}
-                  >
-                    View Details
-                  </Button>
-                  <IconButton
-                    color="secondary"
+                    startIcon={<GitHub />}
                     href={project.github}
                     target="_blank"
-                    rel="noopener noreferrer"
                   >
-                    <GitHub />
-                  </IconButton>
+                    View Code
+                  </Button>
+                  {project.demo && (
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      size="small"
+                      startIcon={<Launch />}
+                      href={project.demo}
+                      target="_blank"
+                    >
+                      Live Demo
+                    </Button>
+                  )}
                 </Box>
               </CardContent>
             </Card>
-          </Box>
+          </Grid>
         ))}
-      </Stack>
+      </Grid>
     </Box>
   );
 
@@ -538,9 +736,20 @@ const MainView = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} md={8}>
           <Paper sx={{ p: 4 }}>
-            <Stack spacing={3}>
+            <Typography variant="h2" color="warning.main" gutterBottom>
+              Get In Touch
+            </Typography>
+
+            <Stack spacing={3} mt={3}>
               <Box display="flex" alignItems="center" gap={2}>
-                <Email color="warning" />
+                <IconButton
+                  sx={{
+                    backgroundColor: "rgba(0,255,65,0.1)",
+                    "&:hover": { backgroundColor: "rgba(0,255,65,0.2)" },
+                  }}
+                >
+                  <Email color="warning" />
+                </IconButton>
                 <Box>
                   <Typography variant="h3" color="warning.main">
                     Email
@@ -555,10 +764,17 @@ const MainView = () => {
                 </Box>
               </Box>
 
-              <Divider />
+              <Divider sx={{ borderColor: "#333" }} />
 
               <Box display="flex" alignItems="center" gap={2}>
-                <LinkedIn color="warning" />
+                <IconButton
+                  sx={{
+                    backgroundColor: "rgba(0,255,65,0.1)",
+                    "&:hover": { backgroundColor: "rgba(0,255,65,0.2)" },
+                  }}
+                >
+                  <LinkedIn color="warning" />
+                </IconButton>
                 <Box>
                   <Typography variant="h3" color="warning.main">
                     LinkedIn
@@ -570,15 +786,22 @@ const MainView = () => {
                     color="primary.main"
                     underline="hover"
                   >
-                    linkedin.com/in/daniel-john-almirante
+                    /in/daniel-john-almirante
                   </Link>
                 </Box>
               </Box>
 
-              <Divider />
+              <Divider sx={{ borderColor: "#333" }} />
 
               <Box display="flex" alignItems="center" gap={2}>
-                <GitHub color="warning" />
+                <IconButton
+                  sx={{
+                    backgroundColor: "rgba(0,255,65,0.1)",
+                    "&:hover": { backgroundColor: "rgba(0,255,65,0.2)" },
+                  }}
+                >
+                  <GitHub color="warning" />
+                </IconButton>
                 <Box>
                   <Typography variant="h3" color="warning.main">
                     GitHub
@@ -599,46 +822,71 @@ const MainView = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Paper sx={{ p: 3, height: "fit-content" }}>
-            <Typography variant="h3" color="warning.main" gutterBottom>
-              $ ping status
-            </Typography>
-            <Stack spacing={1}>
-              <Typography color="primary.main">
-                PING danieljohn.portfolio (127.0.0.1)
+          <Stack spacing={3}>
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h3" color="warning.main" gutterBottom>
+                $ ping status
               </Typography>
-              <Typography color="primary.main">
-                64 bytes from danieljohn: icmp_seq=1 ttl=64 time=0.1ms
+              <Stack spacing={1} mt={2}>
+                <Typography color="primary.main" variant="body2">
+                  PING danieljohn.dev (127.0.0.1)
+                </Typography>
+                <Typography color="primary.main" variant="body2">
+                  64 bytes: time=0.1ms
+                </Typography>
+                <Box mt={2}>
+                  <Typography color="success.main">
+                    ● Available for new opportunities
+                  </Typography>
+                  <Typography color="success.main">
+                    ● Open to remote work
+                  </Typography>
+                  <Typography color="success.main">
+                    ● Ready to collaborate
+                  </Typography>
+                </Box>
+              </Stack>
+            </Paper>
+
+            <Paper sx={{ p: 3 }}>
+              <Typography variant="h3" color="warning.main" gutterBottom>
+                $ uptime
               </Typography>
-              <Typography color="primary.main">
-                🟢 Available for new opportunities
+              <Typography color="primary.main" variant="body2" mt={2}>
+                Currently based in Cyprus (GMT+2)
               </Typography>
-              <Typography color="primary.main">
-                🟢 Open to remote work
+              <Typography color="text.secondary" variant="body2">
+                Available for calls between 9 AM - 6 PM
               </Typography>
-              <Typography color="primary.main">
-                🟢 Ready to collaborate
-              </Typography>
-            </Stack>
-          </Paper>
+            </Paper>
+          </Stack>
         </Grid>
       </Grid>
     </Box>
   );
 
   const renderCurrentSection = () => {
-    switch (currentSection) {
-      case 1:
-        return <AboutSection />;
-      case 2:
-        return <SkillsSection />;
-      case 3:
-        return <ProjectsSection />;
-      case 4:
-        return <ContactSection />;
-      default:
-        return <HomeSection />;
-    }
+    const sections = [
+      <HomeSection />,
+      <AboutSection />,
+      <SkillsSection />,
+      <ProjectsSection />,
+      <ContactSection />,
+    ];
+
+    return (
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSection}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          {sections[currentSection]}
+        </motion.div>
+      </AnimatePresence>
+    );
   };
 
   return (
@@ -656,6 +904,9 @@ const MainView = () => {
             display: "flex",
             alignItems: "center",
             gap: 1,
+            position: "sticky",
+            top: 0,
+            zIndex: 100,
           }}
         >
           <Box display="flex" gap={1}>
@@ -663,24 +914,22 @@ const MainView = () => {
               sx={{
                 width: 12,
                 height: 12,
-                backgroundColor: "#ff5f57",
+                backgroundColor: "error.main",
                 borderRadius: "50%",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                "&:hover": { transform: "scale(1.1)" },
               }}
             />
             <Box
               sx={{
                 width: 12,
                 height: 12,
-                backgroundColor: "#ffbd2e",
+                backgroundColor: "success.main",
                 borderRadius: "50%",
-              }}
-            />
-            <Box
-              sx={{
-                width: 12,
-                height: 12,
-                backgroundColor: "#28ca42",
-                borderRadius: "50%",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                "&:hover": { transform: "scale(1.1)" },
               }}
             />
           </Box>
@@ -697,51 +946,80 @@ const MainView = () => {
           <Tabs
             value={currentSection}
             onChange={(e, newValue) => setCurrentSection(newValue)}
-            textColor="secondary"
-            indicatorColor="secondary"
+            textColor="primary"
+            indicatorColor="primary"
             variant="scrollable"
             scrollButtons="auto"
           >
             {sections.map((section, index) => (
-              <Tab key={section} label={section} />
+              <Tab
+                key={section}
+                label={`~/${section}`}
+                icon={<Folder sx={{ fontSize: "1rem" }} />}
+                iconPosition="start"
+              />
             ))}
           </Tabs>
         </Paper>
 
         {/* Main Content */}
         <Container maxWidth="lg" sx={{ py: 4 }}>
-          <Box>{renderCurrentSection()}</Box>
+          <Box mb={4}>{renderCurrentSection()}</Box>
 
-          {/* Command History */}
+          {/* Terminal Interface */}
           <Box mt={6}>
-            {commandHistory.map((entry, index) => (
-              <Box key={index} mb={1}>
-                <Box display="flex" alignItems="center" gap={1}>
-                  <Typography color="secondary.main">
-                    daniel@portfolio:~$
-                  </Typography>
-                  <Typography color="text.primary">{entry.command}</Typography>
-                </Box>
-                <Typography
-                  color="primary.main"
-                  component="pre"
-                  sx={{
-                    ml: 3,
-                    whiteSpace: "pre-wrap",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  {entry.output.replace(/\\n/g, "\n")}
-                </Typography>
-              </Box>
-            ))}
-          </Box>
+            <Paper sx={{ p: 3, backgroundColor: "rgba(26,26,26,0.8)" }}>
+              <Typography variant="h3" color="warning.main" gutterBottom>
+                Terminal
+              </Typography>
 
-          {/* Command Input */}
-          <Box mt={3}>
-            <Paper sx={{ p: 2, backgroundColor: "rgba(42,42,42,0.5)" }}>
+              {/* Command History */}
+              <Box
+                sx={{
+                  maxHeight: "300px",
+                  overflowY: "auto",
+                  mb: 2,
+                  "&::-webkit-scrollbar": {
+                    width: "8px",
+                  },
+                  "&::-webkit-scrollbar-track": {
+                    background: "#1a1a1a",
+                  },
+                  "&::-webkit-scrollbar-thumb": {
+                    background: "#333",
+                    borderRadius: "4px",
+                  },
+                }}
+              >
+                {commandHistory.map((entry, index) => (
+                  <Box key={index} mb={2}>
+                    <Box display="flex" alignItems="center" gap={1}>
+                      <Typography color="secondary.main" variant="body2">
+                        daniel@portfolio:~$
+                      </Typography>
+                      <Typography color="text.primary" variant="body2">
+                        {entry.command}
+                      </Typography>
+                    </Box>
+                    <Typography
+                      color="primary.main"
+                      component="pre"
+                      variant="body2"
+                      sx={{
+                        ml: 3,
+                        whiteSpace: "pre-wrap",
+                        fontFamily: "monospace",
+                      }}
+                    >
+                      {entry.output}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+
+              {/* Command Input */}
               <Box display="flex" alignItems="center" gap={1}>
-                <Typography color="secondary.main">
+                <Typography color="secondary.main" variant="body2">
                   daniel@portfolio:~$
                 </Typography>
                 <TextField
@@ -751,10 +1029,18 @@ const MainView = () => {
                   onChange={(e) => setCurrentCommand(e.target.value)}
                   onKeyPress={handleCommandSubmit}
                   placeholder="Type 'help' for commands..."
-                  autoFocus
+                  autoComplete="off"
                   InputProps={{
                     disableUnderline: true,
-                    style: { fontFamily: "monospace" },
+                    style: {
+                      fontFamily: "monospace",
+                      fontSize: "0.9rem",
+                    },
+                  }}
+                  sx={{
+                    "& input": {
+                      color: "#00ff41",
+                    },
                   }}
                 />
                 <Typography
@@ -770,6 +1056,25 @@ const MainView = () => {
             </Paper>
           </Box>
         </Container>
+
+        {/* Footer */}
+        <Box
+          component="footer"
+          sx={{
+            mt: 8,
+            py: 3,
+            backgroundColor: "#1a1a1a",
+            borderTop: "1px solid #333",
+            textAlign: "center",
+          }}
+        >
+          <Typography variant="body2" color="text.secondary">
+            © 2024 Daniel John Almirante | Built with React & Material-UI
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Try typing commands in the terminal!
+          </Typography>
+        </Box>
       </Box>
     </ThemeProvider>
   );

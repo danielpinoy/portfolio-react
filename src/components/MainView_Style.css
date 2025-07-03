@@ -371,111 +371,330 @@
   margin-top: var(--space-xl);
 }
 
-/* Projects grid layout */
+/* Improved project card grid layout */
 .modern-portfolio .projects-about-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: var(--space-xl);
+  gap: 2rem;
   margin-bottom: var(--space-xxl);
 }
 
-/* Project cards */
+/* Enhanced project card with better shadows and transitions */
 .modern-portfolio .project-card {
+  position: relative;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: var(--background-white);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 .modern-portfolio .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  z-index: 1;
 }
 
-/* Project images */
+/* Improved project image container */
 .modern-portfolio .project-img-container {
   position: relative;
   overflow: hidden;
-  border-radius: var(--space-md) var(--space-md) 0 0;
-  height: 200px;
+  border-radius: 12px 12px 0 0;
+  height: 220px;
 }
 
+/* Enhanced project image with smoother transition */
 .modern-portfolio .project-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.7s ease-out;
 }
 
 .modern-portfolio .project-card:hover .project-img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
-/* Image overlay with tech stack */
+/* Improved project overlay with gradient */
 .modern-portfolio .project-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  padding: var(--space-md);
+  padding: 1.5rem;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.6) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .modern-portfolio .project-card:hover .project-overlay {
   opacity: 1;
+  transform: translateY(0);
 }
 
+/* Enhanced project tech badges in overlay */
 .modern-portfolio .project-tech {
   color: white;
   font-size: 0.9rem;
   font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-/* Project content */
-.modern-portfolio .project-title {
-  margin: var(--space-md) 0;
-  font-size: 1.4rem;
+.modern-portfolio .project-tech-badge {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 30px;
+  font-size: 0.8rem;
+  backdrop-filter: blur(4px);
+  display: inline-block;
 }
 
-.modern-portfolio .project-description {
-  margin-bottom: var(--space-lg);
-  color: var(--text-light);
-  font-size: 0.95rem;
+/* Enhanced project content section */
+.modern-portfolio .project-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 
+/* Improved project title */
+.modern-portfolio .project-title {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  position: relative;
+  padding-bottom: 0.8rem;
+}
+
+.modern-portfolio .project-title:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 3px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.modern-portfolio .project-card:hover .project-title:after {
+  width: 80px;
+}
+
+/* Enhanced project description */
+.modern-portfolio .project-description {
+  margin-bottom: 1.5rem;
+  color: var(--text-light);
+  font-size: 1rem;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+/* Improved project actions container */
 .modern-portfolio .project-actions {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* Remove the previous bottom margin on btn-container */
-.modern-portfolio .project-actions .btn-container {
-  margin-bottom: 0;
-  width: auto;
+/* Project tech tags for desktop view */
+.modern-portfolio .desktop-tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.5rem 0 1rem;
 }
 
-/* Make sure the extra-action doesn't create a new row */
-.modern-portfolio .extra-action {
-  margin-top: 0;
-  display: inline-flex;
+.modern-portfolio .tech-tag {
+  background-color: var(--background-accent);
+  color: var(--primary-color);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
-/* Ensure all buttons have consistent height */
-.modern-portfolio .btn,
+/* Enhanced buttons */
+.modern-portfolio .project-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.2rem;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modern-portfolio .project-btn:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(58, 134, 255, 0.3);
+}
+
+.modern-portfolio .project-btn:active {
+  transform: translateY(-1px);
+}
+
+/* Enhanced GitHub button */
 .modern-portfolio .github-btn {
-  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: var(--background-accent);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  border: none;
 }
+
+.modern-portfolio .github-btn:hover {
+  background-color: var(--text-light);
+  transform: translateY(-3px) rotate(5deg);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modern-portfolio .github-btn svg {
+  width: 22px;
+  height: 22px;
+  transition: all 0.3s ease;
+}
+
+.modern-portfolio .github-btn:hover svg {
+  fill: white;
+}
+
+/* Enhanced case study button */
+.modern-portfolio .case-study-btn {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.modern-portfolio .case-study-btn:hover {
+  background-color: rgba(58, 134, 255, 0.1);
+  color: var(--primary-dark);
+}
+
+/* Multiple button container */
+.modern-portfolio .three-button {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+/* Project card badge for featured projects */
+.modern-portfolio .project-badge {
+  position: absolute;
+  top: 20px;
+  right: -35px;
+  background: var(--secondary-color);
+  color: white;
+  padding: 0.3rem 2.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Project card animation on appearance */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modern-portfolio .project-card.show {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+/* Special layout for RetroFlix card with multiple buttons */
+.modern-portfolio .project-actions.column-layout {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.8rem;
+}
+
+.modern-portfolio .project-actions .main-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+/* Make buttons take equal width */
+.modern-portfolio .project-actions .main-buttons .project-btn {
+  flex: 1;
+  white-space: nowrap;
+  justify-content: center;
+}
+
+/* GitHub button container */
+.modern-portfolio .github-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+/* Wider GitHub button with text */
+.modern-portfolio .wide-github-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background-color: var(--background-accent);
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+}
+
+.modern-portfolio .wide-github-btn:hover {
+  background-color: var(--text-dark);
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modern-portfolio .wide-github-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.modern-portfolio .wide-github-btn:hover svg {
+  fill: white;
+}
+
 /*===========================================
     7. CONTACT SECTION
   ===========================================*/
@@ -643,6 +862,19 @@
     grid-template-columns: 1fr;
   }
 
+  /* Project actions for mobile */
+  .modern-portfolio .project-actions {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .modern-portfolio .project-btn,
+  .modern-portfolio .github-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   /* Contact section */
   .modern-portfolio .contact-info-upper-container {
     flex-direction: column;
@@ -672,5 +904,10 @@
 
   .modern-portfolio .contact-info-container {
     width: 100%;
+  }
+
+  /* Specific to RetroFlix card buttons on small screens */
+  .modern-portfolio .project-actions .main-buttons {
+    flex-direction: column;
   }
 }

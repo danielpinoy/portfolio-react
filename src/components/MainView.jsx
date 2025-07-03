@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Highlight, themes } from "prism-react-renderer";
 import {
@@ -22,14 +22,12 @@ import {
   Container,
   Stack,
   Divider,
-  Avatar,
 } from "@mui/material";
 import {
   GitHub,
   LinkedIn,
   Email,
   Launch,
-  Terminal,
   Code,
   Storage,
   Web,
